@@ -31,7 +31,14 @@ func main() {
 }
 
 func getRoute(w http.ResponseWriter, r *http.Request) {
-	statusCode := listOfCodes[rand.Intn(cap(listOfCodes))]
+	rnd_no := 1 + rand.Intn(9)
+	statusCode := listOfCodes[0]
+	if rnd_no == 7 {
+		statusCode = listOfCodes[2]
+	}
+	if rnd_no == 3 || rnd_no == 5 {
+		statusCode = listOfCodes[1]
+	}
 
 	statusCodeProcess.With(prometheus.Labels{"endpoint": r.URL.Path, "status_code": strconv.Itoa(statusCode)}).Inc()
 
