@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  server:
+    build: .
+    command: go run main.go
+    ports:
+      - "9000:9000"
+  prometheus:
+    image: prom/prometheus:v2.1.0
+    volumes:
+      - ./prometheus.yml:/app/prometheus.yml
+    command:
+      - '--config.file=/app/prometheus.yml'
+    ports:
+      - "9090:9090"
+    user: "root"
